@@ -135,10 +135,10 @@
             const minPrice = parseInt(selectedPrice);
             const maxPrice = minPrice + 9999999;
             
-            // ===== 1. baseUrl에서 모델, 바디타입 경로 제거 =====
+            // 1. baseUrl에서 모델(modelIdentifier), 바디타입(bodyType) 경로가 제거되었습니다.
             const baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles/sortType-price-asc';
             
-            // ===== 2. 연료타입(fuelType) 파라미터 제거 =====
+            // 2. 연료타입(emhfuelType) 파라미터가 제거되었습니다.
             const queryParams = new URLSearchParams({
                 emhdealerId: selectedDealer,
                 emhprice: `${minPrice},${maxPrice}`
