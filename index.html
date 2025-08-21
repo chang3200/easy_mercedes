@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes-Benz Online Store</title>
+    <style>
+        /* CSS 스타일은 이전과 동일합니다 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .search-container {
+            background: #ffffff;
+            padding: 2rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .input-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccd0d5;
+            font-size: 1rem;
+            background-color: #f5f6f7;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        select:focus {
+            outline: none;
+            border-color: #0078d6;
+            box-shadow: 0 0 0 2px rgba(0, 120, 214, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 1rem;
+            border-radius: 8px;
+            border: none;
+            background-color: #0078d6;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <h1>Mercedes-Benz Online Store</h1>
+        <form id="searchForm">
+            <div class="input-group">
+                <label for="priceRange">가격대 선택</label>
+                <select id="priceRange" name="priceRange"></select>
+            </div>
+            <div class="input-group">
+                <label for="color">색상 선택</label>
+                <select id="color" name="color">
+                    <option value="">모든 색상</option>
+                    <option value="그레이">그레이</option>
+                    <option value="레드">레드</option>
+                    <option value="브라운">브라운</option>
+                    <option value="블랙">블랙</option>
+                    <option value="블루">블루</option>
+                    <option value="실버">실버</option>
+                    <option value="화이트">화이트</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="dealer">딜러사</label>
+                <select id="dealer" name="dealer">
+                    <option value="GS0014308">한성자동차</option>
+                </select>
+            </div>
+            <button type="submit">검색하기</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript는 이전과 동일합니다.
+        const searchForm = document.getElementById('searchForm');
+        const priceRangeSelect = document.getElementById('priceRange');
+
+        const startPrice = 40000000;
+        const endPrice = 200000000;
+        const increment = 10000000;
+
+        for (let price = startPrice; price <= endPrice; price += increment) {
+            const option = document.createElement('option');
+            option.value = price;
+            option.textContent = `${price.toLocaleString('ko-KR')}원대`;
+            priceRangeSelect.appendChild(option);
+        }
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const selectedPrice = document.getElementById('priceRange').value;
+            const selectedDealer = document.getElementById('dealer').value;
+            const selectedColor = document.getElementById('color').value;
+
+            const minPrice = parseInt(selectedPrice);
+            const maxPrice = minPrice + 9999999;
+            
+            const baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles/modelIdentifier-E_CLASS/bodyType-LIMOUSINE/sortType-price-asc';
+            const fuelType = 'PETROL_ELECTRIC_PLUGIN_HYBRID,DIESEL_ELECTRIC_PLUGIN_HYBRID';
+
+            const queryParams = new URLSearchParams({
+                emhfuelType: fuelType,
+                emhdealerId: selectedDealer,
+                emhprice: `${minPrice},${maxPrice}`
+            });
+            
+            if (selectedColor) {
+                queryParams.set('emhcolor', selectedColor);
+            }
+
+            const finalUrl = `${baseUrl}?${queryParams.toString()}`;
+            window.open(finalUrl, '_blank');
+        });
+    </script>
+
+</body>
+</html>
