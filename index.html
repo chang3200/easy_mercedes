@@ -4,78 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mercedes-Benz Online Store</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+
     <style>
-        /* CSS 스타일은 이전과 동일합니다 */
+        /* 커스텀 폰트 정의 */
+        @font-face {
+            font-family: 'MBKCorpoS';
+            src: url('MBKCorpoS.otf') format('opentype');
+        }
+
+        :root {
+            --primary-color: #0078d6;
+            --light-gray: #f8f9fa;
+            --border-color: #dee2e6;
+            --text-color: #343a40;
+            --text-secondary: #6c757d;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'MBKCorpoS', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
             background-color: #f0f2f5;
+            color: var(--text-color);
         }
+
         .search-container {
             background: #ffffff;
-            padding: 2rem 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             text-align: center;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
         }
+
         h1 {
+            font-family: 'MBKCorpoS', sans-serif;
             color: #1a1a1a;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             font-size: 1.8rem;
-            font-weight: 600;
+            /* 1. 제목 볼드 제거 */
+            font-weight: normal; 
         }
+
         .input-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.75rem;
             text-align: left;
         }
+
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
+            margin-bottom: 0.6rem;
+            color: var(--text-secondary);
             font-weight: 500;
             font-size: 0.9rem;
         }
+
         select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 16px;
             border-radius: 8px;
-            border: 1px solid #ccd0d5;
+            border: 1px solid var(--border-color);
             font-size: 1rem;
-            background-color: #f5f6f7;
+            font-family: 'MBKCorpoS', sans-serif;
+            background-color: var(--light-gray);
             appearance: none;
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
-            background-position: right 12px center;
+            background-position: right 16px center;
             background-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
+
         select:focus {
             outline: none;
-            border-color: #0078d6;
-            box-shadow: 0 0 0 2px rgba(0, 120, 214, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 120, 214, 0.15);
         }
+
         button {
             width: 100%;
-            padding: 14px;
-            margin-top: 1rem;
+            padding: 16px;
+            margin-top: 1.5rem;
             border-radius: 8px;
             border: none;
-            background-color: #0078d6;
+            background-color: var(--primary-color);
             color: white;
             font-size: 1.1rem;
             font-weight: bold;
+            font-family: 'MBKCorpoS', sans-serif;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
         }
+
         button:hover {
             background-color: #005a9e;
         }
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 2. 가격 스타일 변경 */
+        .price-value-display {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        .price-divider {
+            border: none;
+            height: 1px;
+            background-color: var(--primary-color); /* 선 색상 버튼 색상으로 변경 */
+            margin: 0 auto 1.5rem auto;
+        }
+        #price-slider {
+            margin: 1.5rem 0.5rem;
+        }
+        .noUi-connect {
+            background: var(--primary-color);
+        }
+        .noUi-handle {
+            height: 22px;
+            width: 22px;
+            top: -7px;
+            right: -11px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .noUi-handle:focus {
+            outline: none;
+        }
+        .noUi-handle::before, .noUi-handle::after {
+            display: none;
+        }
+        
     </style>
 </head>
 <body>
@@ -84,11 +159,28 @@
         <h1>Mercedes-Benz Online Store</h1>
         <form id="searchForm">
             <div class="input-group">
-                <label for="priceRange">가격대 선택</label>
-                <select id="priceRange" name="priceRange"></select>
+                <label>가격 범위</label>
+                <div class="price-value-display">
+                    <span id="price-value"></span>
+                </div>
+                <hr class="price-divider">
+                <div id="price-slider"></div>
             </div>
+
             <div class="input-group">
-                <label for="color">색상 선택</label>
+                <label for="bodyType">차체 타입</label>
+                <select id="bodyType" name="bodyType">
+                    <option value="">모든 타입</option>
+                    <option value="SUV">SUV</option>
+                    <option value="CABRIO">오픈카</option>
+                    <option value="COUPE">쿠페</option>
+                    <option value="HATCHBACK">해치백</option>
+                    <option value="LIMOUSINE">세단</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="color">색상</label>
                 <select id="color" name="color">
                     <option value="">모든 색상</option>
                     <option value="그레이">그레이</option>
@@ -100,10 +192,12 @@
                     <option value="화이트">화이트</option>
                 </select>
             </div>
+
             <div class="input-group">
                 <label for="dealer">딜러사</label>
                 <select id="dealer" name="dealer">
                     <option value="GS0014308">한성자동차</option>
+                    <option value="GS0047240">KCC</option>
                 </select>
             </div>
             <button type="submit">검색하기</button>
@@ -111,34 +205,63 @@
     </div>
 
     <script>
+        const priceSlider = document.getElementById('price-slider');
+        // 2. 가격 표시 스타일 변경 (JavaScript 변수 변경)
+        const priceValueDisplay = document.getElementById('price-value');
+        const MAX_PRICE_VALUE = 30000;
+
+        noUiSlider.create(priceSlider, {
+            start: [6000, 15000], 
+            connect: true,
+            step: 100,
+            range: {
+                'min': 4000,
+                'max': MAX_PRICE_VALUE
+            },
+            format: {
+                to: value => Math.round(value),
+                from: value => Number(value)
+            }
+        });
+
+        priceSlider.noUiSlider.on('update', function (values) {
+            const minVal = values[0];
+            const maxVal = values[1];
+            let priceText;
+
+            // 2. 가격 표시 스타일 변경 (JavaScript 로직 변경)
+            if (maxVal >= MAX_PRICE_VALUE) {
+                priceText = `${minVal.toLocaleString('ko-KR')}만원 - 3억원 이상`;
+            } else {
+                priceText = `${minVal.toLocaleString('ko-KR')}만원 - ${maxVal.toLocaleString('ko-KR')}만원`;
+            }
+            priceValueDisplay.innerHTML = priceText;
+        });
+
         const searchForm = document.getElementById('searchForm');
-        const priceRangeSelect = document.getElementById('priceRange');
-
-        const startPrice = 40000000;
-        const endPrice = 200000000;
-        const increment = 10000000;
-
-        for (let price = startPrice; price <= endPrice; price += increment) {
-            const option = document.createElement('option');
-            option.value = price;
-            option.textContent = `${price.toLocaleString('ko-KR')}원대`;
-            priceRangeSelect.appendChild(option);
-        }
-
         searchForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const selectedPrice = document.getElementById('priceRange').value;
-            const selectedDealer = document.getElementById('dealer').value;
-            const selectedColor = document.getElementById('color').value;
+            const priceValues = priceSlider.noUiSlider.get();
+            const minPrice = priceValues[0] * 10000;
+            let maxPrice = priceValues[1] * 10000;
+            
+            if (maxPrice >= MAX_PRICE_VALUE * 10000) {
+                maxPrice = '';
+            }
 
-            const minPrice = parseInt(selectedPrice);
-            const maxPrice = minPrice + 9999999;
+            const selectedBodyType = document.getElementById('bodyType').value;
+            const selectedColor = document.getElementById('color').value;
+            const selectedDealer = document.getElementById('dealer').value;
             
-            // 1. baseUrl에서 모델(modelIdentifier), 바디타입(bodyType) 경로가 제거되었습니다.
-            const baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles/sortType-price-asc';
+            let baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles';
+
+            if (selectedBodyType) {
+                baseUrl += `/bodyType-${selectedBodyType}`;
+            }
             
-            // 2. 연료타입(emhfuelType) 파라미터가 제거되었습니다.
+            baseUrl += '/sortType-price-asc';
+
             const queryParams = new URLSearchParams({
                 emhdealerId: selectedDealer,
                 emhprice: `${minPrice},${maxPrice}`
@@ -149,6 +272,7 @@
             }
 
             const finalUrl = `${baseUrl}?${queryParams.toString()}`;
+            console.log("생성된 URL:", finalUrl);
             window.open(finalUrl, '_blank');
         });
     </script>
