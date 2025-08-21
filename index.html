@@ -111,7 +111,6 @@
     </div>
 
     <script>
-        // JavaScript는 이전과 동일합니다.
         const searchForm = document.getElementById('searchForm');
         const priceRangeSelect = document.getElementById('priceRange');
 
@@ -136,11 +135,11 @@
             const minPrice = parseInt(selectedPrice);
             const maxPrice = minPrice + 9999999;
             
-            const baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles/modelIdentifier-E_CLASS/bodyType-LIMOUSINE/sortType-price-asc';
-            const fuelType = 'PETROL_ELECTRIC_PLUGIN_HYBRID,DIESEL_ELECTRIC_PLUGIN_HYBRID';
-
+            // ===== 1. baseUrl에서 모델, 바디타입 경로 제거 =====
+            const baseUrl = 'https://www.mercedes-benz.co.kr/passengercars/buy/new-car/search-results.html/vehicleCategory-vehicles/sortType-price-asc';
+            
+            // ===== 2. 연료타입(fuelType) 파라미터 제거 =====
             const queryParams = new URLSearchParams({
-                emhfuelType: fuelType,
                 emhdealerId: selectedDealer,
                 emhprice: `${minPrice},${maxPrice}`
             });
